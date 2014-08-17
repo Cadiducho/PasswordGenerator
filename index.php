@@ -173,13 +173,16 @@ echo '
 
 
 ?>
-          </div>
+			</div>
+			<div class="fiar">
+					<p>Visita el código en <a href="http://github.com/Cadiducho/pass.cadiducho.com/" class="verde">GitHub!</a>
+			</div>
 
-          <div class="mastfoot">
-            <div class="inner">
-              <p>&copy; 2014 CadiduchoDev, Desarrollado por <a href="http://twitter.com/Cadiducho"> @Cadiducho</a></p>
-            </div>
-          </div>
+			<div class="mastfoot">
+				<div class="inner">
+					<p>&copy; 2014 CadiduchoDev, Desarrollado por <a href="http://twitter.com/Cadiducho"> @Cadiducho</a></p>
+				</div>
+			</div>
 
         </div>
 
