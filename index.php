@@ -13,16 +13,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <meta name="description" content="Generador automático de contraseñas online">
+    <meta name="author" content="Cadiducho">
+    <link rel="icon" type="image/png" href="http://www.cadiducho.com/datos/ico.png" />
 
     <title>Generador de Contrase&ntilde;as | Cadiducho.com </title>
 
     <!-- Bootstrap core CSS -->
-    <link href="http://www.cadiducho.com/datos/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Css de la essta pagina -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+   
+    <!-- Css de la esta pagina -->
     <link href="pass.css" rel="stylesheet">
+	
 	<!-- Css de la nueva web -->
 	<link href="http://www.cadiducho.com/datos/css/nuevo.css" rel="stylesheet">
 
@@ -36,7 +39,7 @@
             <div class="inner">
               <h3 class="masthead-brand">Cadiducho.com</h3>
               <ul class="nav masthead-nav">
-                <li class="active"><a href="#">Pass</a></li>
+                <li class="active"><a href="">Pass</a></li>
                 <li><a href="http://Cadiducho.com">Inicio</a></li>
                 <li><a href="http://blog.cadiducho.com">Blog</a></li>
               </ul>
@@ -44,7 +47,7 @@
           </div>
 
           <div class="inner cover">
-            <h1 class="cover-heading morado">Caracteristicas de tu contrase&ntilde;a:</h1>
+            <h1 class="cover-heading morado"><i class="fa fa-lock"></i> Caracter&iacute;sticas de tu contrase&ntilde;a: </h1>
 <? /* Código del programa */ 
 
 $limit = 100; //Si no me tirais la web locos
@@ -117,7 +120,7 @@ function generate_pass() {
 			$pass .= $chars[mt_rand(0, $count - 1)];
 	 }
 	if (!empty($pass))
-		echo "<span class='glyphicon glyphicon-ok verde'></span> Tu contrase&ntilde;a generada es:<br /><tt><strong>$pass</strong></tt>";
+		echo '<i class="fa fa-check verde"></i> Tu contrase&ntilde;a generada es:<br /><tt><strong>' . $pass . '</strong></tt>';
  }
 
 
@@ -128,15 +131,15 @@ function show_error()
 	if ($limit <= abs($_REQUEST['value']))
 		$error = "Contrase&ntilde;a mayor o igual que $limit caracteres.";
 	elseif( !is_numeric($_REQUEST['value']) && (!in_array($_REQUEST['value'], array('', '0', 'keepalive'))) )
-		$error = "No has incluido un valor numerico para el numero de caracteres.";
+		$error = "No has incluido un valor numerico para el n&uacute;mero de caracteres.";
 	elseif ($_REQUEST['value'] == '0')
-		$error = "El numero de caracteres es 0.";
+		$error = "El n&uacute;mero de caracteres es 0.";
 	elseif (empty($_REQUEST['value']))
-		$error = "El numero de caracteres esta vacio.";
+		$error = "El n&uacute;mero de caracteres esta vacio.";
 	else
 		$error = "Ocurrio un error procesando la informacion.";
 	/* Escribe el error */
-	echo "<span class='glyphicon glyphicon-remove rojo'></span> Se han producido ciertos errores: <br /><tt><strong>$error</strong></tt>";
+	echo "<i class='fa fa-times rojo'></i> Se han producido ciertos errores: <br /><tt><strong>$error</strong></tt>";
 	return;
  }
 
@@ -156,15 +159,15 @@ function show_error()
 echo '
 			<span style="font-size: 80%">Rellena el formulario y pulsa en generar contrase&ntilde;a!</span><br /><br />
 			<form action="' . $_SERVER['SCRIPT_NAME'] . '" method="post">
-				<label><input type="checkbox" name="usenums" ' , ($_REQUEST['usenums'] && !$keepalive) ? 'checked="checked"' : '' , ' /> Incluir numeros?</label>
+				<label><input type="checkbox" name="usenums" ' , ($_REQUEST['usenums'] && !$keepalive) ? 'checked="checked"' : '' , ' /> ¿Incluir n&uacute;meros?</label>
 				<br />
-				<label><input type="checkbox" name="usecaps" ' , ($_REQUEST['usecaps'] && !$keepalive) ? 'checked="checked"' : '' , ' /> Incluir mayusculas?</label>
+				<label><input type="checkbox" name="usecaps" ' , ($_REQUEST['usecaps'] && !$keepalive) ? 'checked="checked"' : '' , ' /> ¿Incluir may&uacute;sculas?</label>
 				<br />
-				<label><input type="checkbox" name="uselower" ' , ($_REQUEST['uselower'] && !$keepalive) ? 'checked="checked"' : '' , ' /> Incluir minisculas?</label>
+				<label><input type="checkbox" name="uselower" ' , ($_REQUEST['uselower'] && !$keepalive) ? 'checked="checked"' : '' , ' /> ¿Incluir min&uacute;sculas?</label>
 				<br />
-				<label><input type="checkbox" name="usesymbols" ' , ($_REQUEST['usesymbols'] && !$keepalive) ? 'checked="checked"' : '' , ' /> Incluir simbolos o caracteres especiales?</label>
+				<label><input type="checkbox" name="usesymbols" ' , ($_REQUEST['usesymbols'] && !$keepalive) ? 'checked="checked"' : '' , ' /> ¿Incluir s&iacute;mbolos o caracteres especiales?</label>
 				<br />
-				<label>Numero de caracteres:&nbsp;&nbsp;<input type="text" name="value" value="' . (!empty($_REQUEST['value']) ? $_REQUEST['value'] : '') . '" maxlength="3" size="5" /></label><br />
+				<label>N&uacute;mero de caracteres:&nbsp;&nbsp;<input type="text" name="value" value="' . (!empty($_REQUEST['value']) ? $_REQUEST['value'] : '') . '" maxlength="3" size="5" /></label><br />
 				<br />
 				<input value="Generar" class="btn btn-lg btn-info " type="submit" />
 			</form><br />';
@@ -175,12 +178,13 @@ echo '
 ?>
 			</div>
 			<div class="fiar">
-					<p>Visita el código en <a href="http://github.com/Cadiducho/pass.cadiducho.com/" class="verde">GitHub!</a>
+				</br>
+				<p>Ninguna contrase&ntilde;a es guardada. ¡Compru&eacute;balo en <a href="http://github.com/Cadiducho/pass.cadiducho.com/" class="verde">GitHub!</a>
 			</div>
 
 			<div class="mastfoot">
 				<div class="inner">
-					<p>&copy; 2014 CadiduchoDev, Desarrollado por <a href="http://twitter.com/Cadiducho"> @Cadiducho</a></p>
+					<p>&copy; 2014 - 2016, Desarrollado por <a href="http://twitter.com/Cadiducho"> @Cadiducho</a></p>
 				</div>
 			</div>
 
@@ -193,8 +197,7 @@ echo '
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://www.cadiducho.com/datos/js/bootstrap.min.js"></script>
-    <script src="http://www.cadiducho.com/datos/js/docs.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   </body>
 </html>
