@@ -10,46 +10,48 @@
  | |___| (_| | (_| | | (_| | |_| | (__| | | | (_) |
   \_____\__,_|\__,_|_|\__,_|\__,_|\___|_| |_|\___/ 
 --> 
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Generador automático de contraseñas online">
     <meta name="author" content="Cadiducho">
-    <link rel="icon" type="image/png" href="http://www.cadiducho.com/datos/ico.png" />
+    <link rel="icon" type="image/png" href="https://www.cadiducho.com/datos/ico.png" />
 
     <title>Generador de Contrase&ntilde;as | Cadiducho.com </title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
    
     <!-- Css de la esta pagina -->
     <link href="pass.css" rel="stylesheet">
 	
 	<!-- Css de la nueva web -->
-	<link href="http://www.cadiducho.com/datos/css/nuevo.css" rel="stylesheet">
+	<link href="https://www.cadiducho.com/datos/css/nuevo.css" rel="stylesheet">
 
   </head>
 
   <body>
     <div class="site-wrapper">
-      <div class="site-wrapper-inner">
-        <div class="cover-container">
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand">Cadiducho.com</h3>
-              <ul class="nav masthead-nav">
-                <li class="active"><a href="">Pass</a></li>
-                <li><a href="http://Cadiducho.com">Inicio</a></li>
-                <li><a href="http://blog.cadiducho.com">Blog</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="inner cover">
-            <h1 class="cover-heading morado"><i class="fa fa-lock"></i> Caracter&iacute;sticas de tu contrase&ntilde;a: </h1>
-<? /* Código del programa */ 
-
+        <div class="site-wrapper-inner">
+            <div class="cover-container">
+                <div class="masthead clearfix">
+                    <div class="inner">
+                        <h3 class="masthead-brand">Cadiducho.com</h3>
+                        <ul class="nav masthead-nav">
+                            <li class="active"><a href="">Pass</a></li>
+                            <li><a href="https://Cadiducho.com">Inicio</a></li>
+                            <li><a href="https://blog.cadiducho.com">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="inner cover">
+                    <h1 class="cover-heading morado"><i class="fa fa-lock"></i> Caracter&iacute;sticas de tu contrase&ntilde;a: </h1>
+                    
+<?
+/* Código del programa */ 
+// TODO: Mover a clase aparte
 $limit = 100; //Si no me tirais la web locos
 
 function generate_pass() {	
@@ -76,36 +78,32 @@ function generate_pass() {
 
 	$chars = array();
 
-	if (!empty($nums) )
-	{
+	if (!empty($nums)) {
 		foreach ($nums as $value)
 			$chars[] = $value;
-	 }
+	}
 
-	if (!empty($caps) )
-	 {
+	if (!empty($caps)) {
 		foreach ($caps as $value)
 			$chars[] = $value;
-	 }
+	}
 
-	if (!empty($lowers) )
-	 {
+	if (!empty($lowers)) {
 		foreach ($lowers as $value)
 			$chars[] = $value;
-	 }
+	}
 
-	if (!empty($symbols) )
-	 {
+	if (!empty($symbols)) {
 		foreach ($symbols as $value)
 			$chars[] = $value;
-	 }
+	}
 
 	if (empty($chars))
 		$chars = array_merge(array_merge(range('a', 'z'), range('A', 'Z')), range('0', '9'));
 
 	$count = count($chars);
 
-	if( is_numeric($_REQUEST['value']) && (abs($_REQUEST['value']) < $limit) && (!empty($_REQUEST['value'])) )
+	if ( is_numeric($_REQUEST['value']) && (abs($_REQUEST['value']) < $limit) && (!empty($_REQUEST['value'])) )
 		$length = abs((int) $_REQUEST['value']);
 	elseif (empty($_REQUEST['value']) && ($_REQUEST['value'] != '0') && !isset($_REQUEST['value']))
 		$length = 'keepalive';
@@ -114,18 +112,16 @@ function generate_pass() {
 
 	mt_srand((double)microtime() * 1000000);
 
-	if ($length != 'keepalive')
-	 {
+	if ($length != 'keepalive') {
 		for($i = 0; $i < $length; $i++)
 			$pass .= $chars[mt_rand(0, $count - 1)];
-	 }
+	}
 	if (!empty($pass))
 		echo '<i class="fa fa-check verde"></i> Tu contrase&ntilde;a generada es:<br /><tt><strong>' . $pass . '</strong></tt>';
- }
+}
 
 
-function show_error()
- {
+function show_error() {
 	global $limit;	
 
 	if ($limit <= abs($_REQUEST['value']))
@@ -141,17 +137,16 @@ function show_error()
 	/* Escribe el error */
 	echo "<i class='fa fa-times rojo'></i> Se han producido ciertos errores: <br /><tt><strong>$error</strong></tt>";
 	return;
- }
+}
 
 
 
-	if (!isset($_REQUEST['usenums']) && !isset($_REQUEST['usecaps']) && !isset($_REQUEST['uselower']) && !isset($_REQUEST['usesymbols']))
-	 {
+	if (!isset($_REQUEST['usenums']) && !isset($_REQUEST['usecaps']) && !isset($_REQUEST['uselower']) && !isset($_REQUEST['usesymbols'])) {
 		$_REQUEST['usenums'] = true;
 		$_REQUEST['usecaps'] = true;
 		$_REQUEST['uselower'] = true;
 		$_REQUEST['usesymbols'] = false;
-	 }
+	}
 
 	if (!isset($_REQUEST['value']))
 		$keepalive = true;
@@ -176,28 +171,22 @@ echo '
 
 
 ?>
-			</div>
-			<div class="fiar">
-				</br>
-				<p>Ninguna contrase&ntilde;a es guardada. ¡Compru&eacute;balo en <a href="http://github.com/Cadiducho/pass.cadiducho.com/" class="verde">GitHub!</a>
-			</div>
-
-			<div class="mastfoot">
-				<div class="inner">
-					<p>&copy; 2014 - 2016, Desarrollado por <a href="http://twitter.com/Cadiducho"> @Cadiducho</a></p>
-				</div>
-			</div>
-
+                </div>
+                <div class="fiar">
+                    </br>
+                    <p>Ninguna contrase&ntilde;a es guardada. ¡Compru&eacute;balo en <a href="https://github.com/Cadiducho/pass.cadiducho.com/" class="verde">GitHub!</a>
+                </div>
+                
+                <div class="mastfoot">
+                    <div class="inner">
+                        <p>&copy; 2014 - <?= date('Y'); ?>, Desarrollado por <a href="https://twitter.com/Cadiducho"> @Cadiducho</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
-
-      </div>
-
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  </body>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
 </html>
