@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  
-<!--   
-   _____          _ _     _            _           
-  / ____|        | (_)   | |          | |          
- | |     __ _  __| |_  __| |_   _  ___| |__   ___  
- | |    / _` |/ _` | |/ _` | | | |/ __| '_ \ / _ \ 
+
+<!--
+   _____          _ _     _            _
+  / ____|        | (_)   | |          | |
+ | |     __ _  __| |_  __| |_   _  ___| |__   ___
+ | |    / _` |/ _` | |/ _` | | | |/ __| '_ \ / _ \
  | |___| (_| | (_| | | (_| | |_| | (__| | | | (_) |
-  \_____\__,_|\__,_|_|\__,_|\__,_|\___|_| |_|\___/ 
---> 
+  \_____\__,_|\__,_|_|\__,_|\__,_|\___|_| |_|\___/
+-->
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Generador automático de contraseñas online">
     <meta name="author" content="Cadiducho">
-    <link rel="icon" type="image/png" href="https://www.cadiducho.com/datos/ico.png" />
+    <link rel="icon" type="image/png" href="../icon.png" />
 
     <title>Generador de Contrase&ntilde;as | Cadiducho.com </title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-   
+
     <!-- Css de la esta pagina -->
     <link href="pass.css" rel="stylesheet">
-	
-	<!-- Css de la nueva web -->
-	<link href="https://www.cadiducho.com/datos/css/nuevo.css" rel="stylesheet">
+	<link href="nuevo.css" rel="stylesheet">
 
   </head>
 
@@ -38,25 +36,24 @@
             <div class="cover-container">
                 <div class="masthead clearfix">
                     <div class="inner">
-                        <h3 class="masthead-brand">Cadiducho.com</h3>
+                        <h3 class="masthead-brand"><a href="https://Cadiducho.com">Cadiducho.com</a></h3>
                         <ul class="nav masthead-nav">
                             <li class="active"><a href="">Pass</a></li>
                             <li><a href="https://Cadiducho.com">Inicio</a></li>
-                            <li><a href="https://blog.cadiducho.com">Blog</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="inner cover">
                     <h1 class="cover-heading morado"><i class="fa fa-lock"></i> Caracter&iacute;sticas de tu contrase&ntilde;a: </h1>
-                    
+
 <?
-/* Código del programa */ 
+/* Código del programa */
 // TODO: Mover a clase aparte
 $limit = 100; //Si no me tirais la web locos
 
-function generate_pass() {	
+function generate_pass() {
 	global $limit;
-	
+
 	$pass = '';
 	$length = '';
 	$nums = array();
@@ -64,16 +61,16 @@ function generate_pass() {
 	$lowers = array();
 	$symbols = array();
 
-	if ($_REQUEST['usenums'])
+	if ($_REQUEST['usenums'] ?? '')
 		$nums = range('0', '9');
 
-	if ($_REQUEST['usecaps'])
+	if ($_REQUEST['usecaps'] ?? '')
 		$caps = range('A', 'Z');
 
-	if ($_REQUEST['uselower'])
+	if ($_REQUEST['uselower'] ?? '')
 		$lowers = range('a', 'z');
 
-	if ($_REQUEST['usesymbols'])
+	if ($_REQUEST['usesymbols'] ?? '')
 		$symbols =  array_merge(range("{", "~"), range(":", "@"));
 
 	$chars = array();
@@ -103,9 +100,9 @@ function generate_pass() {
 
 	$count = count($chars);
 
-	if ( is_numeric($_REQUEST['value']) && (abs($_REQUEST['value']) < $limit) && (!empty($_REQUEST['value'])) )
+	if ((!empty($_REQUEST['value']) && is_numeric($_REQUEST['value']) && (abs($_REQUEST['value']) < $limit)) )
 		$length = abs((int) $_REQUEST['value']);
-	elseif (empty($_REQUEST['value']) && ($_REQUEST['value'] != '0') && !isset($_REQUEST['value']))
+	elseif (($_REQUEST['value'] ?? '') != '0')
 		$length = 'keepalive';
 	else
 		show_error();
@@ -122,7 +119,7 @@ function generate_pass() {
 
 
 function show_error() {
-	global $limit;	
+	global $limit;
 
 	if ($limit <= abs($_REQUEST['value']))
 		$error = "Contrase&ntilde;a mayor o igual que $limit caracteres.";
@@ -140,43 +137,34 @@ function show_error() {
 }
 
 
+    $keepalive = !isset($_REQUEST['value']);
 
-	if (!isset($_REQUEST['usenums']) && !isset($_REQUEST['usecaps']) && !isset($_REQUEST['uselower']) && !isset($_REQUEST['usesymbols'])) {
-		$_REQUEST['usenums'] = true;
-		$_REQUEST['usecaps'] = true;
-		$_REQUEST['uselower'] = true;
-		$_REQUEST['usesymbols'] = false;
-	}
-
-	if (!isset($_REQUEST['value']))
-		$keepalive = true;
-
-echo '
+    ?>
 			<span style="font-size: 80%">Rellena el formulario y pulsa en generar contrase&ntilde;a!</span><br /><br />
-			<form action="' . $_SERVER['SCRIPT_NAME'] . '" method="post">
-				<label><input type="checkbox" name="usenums" ' , ($_REQUEST['usenums'] && !$keepalive) ? 'checked="checked"' : '' , ' /> ¿Incluir n&uacute;meros?</label>
+			<form action="<?=$_SERVER['SCRIPT_NAME']?>" method="post">
+				<label><input type="checkbox" name="usenums" <?=($_REQUEST['usenums'] ?? false && !$keepalive) ? 'checked="checked"' : ''?> /> ¿Incluir n&uacute;meros?</label>
 				<br />
-				<label><input type="checkbox" name="usecaps" ' , ($_REQUEST['usecaps'] && !$keepalive) ? 'checked="checked"' : '' , ' /> ¿Incluir may&uacute;sculas?</label>
+				<label><input type="checkbox" name="usecaps" <?=($_REQUEST['usecaps'] ?? false && !$keepalive) ? 'checked="checked"' : ''?> /> ¿Incluir may&uacute;sculas?</label>
 				<br />
-				<label><input type="checkbox" name="uselower" ' , ($_REQUEST['uselower'] && !$keepalive) ? 'checked="checked"' : '' , ' /> ¿Incluir min&uacute;sculas?</label>
+				<label><input type="checkbox" name="uselower" <?=($_REQUEST['uselower'] ?? false && !$keepalive) ? 'checked="checked"' : ''?> /> ¿Incluir min&uacute;sculas?</label>
 				<br />
-				<label><input type="checkbox" name="usesymbols" ' , ($_REQUEST['usesymbols'] && !$keepalive) ? 'checked="checked"' : '' , ' /> ¿Incluir s&iacute;mbolos o caracteres especiales?</label>
+				<label><input type="checkbox" name="usesymbols" <?=($_REQUEST['usesymbols'] ?? false && !$keepalive) ? 'checked="checked"' : ''?> /> ¿Incluir s&iacute;mbolos o caracteres especiales?</label>
 				<br />
-				<label>N&uacute;mero de caracteres:&nbsp;&nbsp;<input type="text" name="value" value="' . (!empty($_REQUEST['value']) ? $_REQUEST['value'] : '') . '" maxlength="3" size="5" /></label><br />
+				<label>N&uacute;mero de caracteres:&nbsp;&nbsp;<input type="text" name="value" value="<?=($_REQUEST['value'] ?? 8)?>" maxlength="3" size="5" /></label><br />
 				<br />
 				<input value="Generar" class="btn btn-lg btn-info " type="submit" />
-			</form><br />';
-
+			</form><br />
+    <?php
 		generate_pass();
 
 
 ?>
                 </div>
                 <div class="fiar">
-                    </br>
-                    <p>Ninguna contrase&ntilde;a es guardada. ¡Compru&eacute;balo en <a href="https://github.com/Cadiducho/pass.cadiducho.com/" class="verde">GitHub!</a>
+                    <br />
+                    <p>Ninguna contrase&ntilde;a es guardada. ¡Compru&eacute;balo en <a href="https://github.com/Cadiducho/PasswordGenerator" class="verde">GitHub!</a>
                 </div>
-                
+
                 <div class="mastfoot">
                     <div class="inner">
                         <p>&copy; 2014 - <?= date('Y'); ?>, Desarrollado por <a href="https://twitter.com/Cadiducho"> @Cadiducho</a></p>
