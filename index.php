@@ -114,7 +114,7 @@ function generate_pass() {
 			$pass .= $chars[mt_rand(0, $count - 1)];
 	}
 	if (!empty($pass))
-		echo '<i class="fa fa-check verde"></i> Tu contrase&ntilde;a generada es:<br /><tt><strong>' . $pass . '</strong></tt>';
+		echo '<i class="fa fa-check verde"></i> Tu contraseña generada es:<br /><tt><strong>' . $pass . '</strong></tt>';
 }
 
 
@@ -122,13 +122,13 @@ function show_error() {
 	global $limit;
 
 	if ($limit <= abs($_REQUEST['value']))
-		$error = "Contrase&ntilde;a mayor o igual que $limit caracteres.";
+		$error = "Contraseña mayor o igual que $limit caracteres.";
 	elseif( !is_numeric($_REQUEST['value']) && (!in_array($_REQUEST['value'], array('', '0', 'keepalive'))) )
 		$error = "No has incluido un valor numerico para el n&uacute;mero de caracteres.";
 	elseif ($_REQUEST['value'] == '0')
-		$error = "El n&uacute;mero de caracteres es 0.";
+		$error = "El número de caracteres es 0.";
 	elseif (empty($_REQUEST['value']))
-		$error = "El n&uacute;mero de caracteres esta vacio.";
+		$error = "El número de caracteres esta vacio.";
 	else
 		$error = "Ocurrio un error procesando la informacion.";
 	/* Escribe el error */
@@ -140,20 +140,47 @@ function show_error() {
     $keepalive = !isset($_REQUEST['value']);
 
     ?>
-			<span style="font-size: 80%">Rellena el formulario y pulsa en generar contrase&ntilde;a!</span><br /><br />
-			<form action="<?=$_SERVER['SCRIPT_NAME']?>" method="post">
-				<label><input type="checkbox" name="usenums" <?=($_REQUEST['usenums'] ?? false && !$keepalive) ? 'checked="checked"' : ''?> /> ¿Incluir n&uacute;meros?</label>
-				<br />
-				<label><input type="checkbox" name="usecaps" <?=($_REQUEST['usecaps'] ?? false && !$keepalive) ? 'checked="checked"' : ''?> /> ¿Incluir may&uacute;sculas?</label>
-				<br />
-				<label><input type="checkbox" name="uselower" <?=($_REQUEST['uselower'] ?? false && !$keepalive) ? 'checked="checked"' : ''?> /> ¿Incluir min&uacute;sculas?</label>
-				<br />
-				<label><input type="checkbox" name="usesymbols" <?=($_REQUEST['usesymbols'] ?? false && !$keepalive) ? 'checked="checked"' : ''?> /> ¿Incluir s&iacute;mbolos o caracteres especiales?</label>
-				<br />
-				<label>N&uacute;mero de caracteres:&nbsp;&nbsp;<input type="text" name="value" value="<?=($_REQUEST['value'] ?? 8)?>" maxlength="3" size="5" /></label><br />
-				<br />
-				<input value="Generar" class="btn btn-lg btn-info " type="submit" />
-			</form><br />
+
+            <form action="<?=$_SERVER['SCRIPT_NAME']?>" method="post">
+                <fieldset>
+                    <small>Rellena el formulario y pulsa en generar contraseña</small>
+
+                    <fieldset class="form-group">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="usenums" <?=($_REQUEST['usenums'] ?? false && !$keepalive) ? 'checked="checked"' : ''?> >
+                        ¿Incluir números?
+                      </label>
+                    </div>
+                    <div class="form-checks">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="usecaps" <?=($_REQUEST['usecaps'] ?? false && !$keepalive) ? 'checked="checked"' : ''?> >
+                        ¿Incluir mayúsculas?
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="uselower" <?=($_REQUEST['uselower'] ?? false && !$keepalive) ? 'checked="checked"' : ''?> >
+                        ¿Incluir minúsculas?
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="usesymbols" <?=($_REQUEST['usesymbols'] ?? false && !$keepalive) ? 'checked="checked"' : ''?>>
+                        ¿Incluir símbolos o caracteres especiales?
+                      </label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4 col-xs-offset-4">
+                            <label class="col-form-label col-form-label-sm" for="numCaracteres">Número de caracteres</label>
+                            <input class="form-control form-control-sm" type="number" min="1" max="20" id="numCaracteres" name="value" value="<?=($_REQUEST['value'] ?? 8)?>">
+                        </div>
+                    </div>
+                  </fieldset>
+                  <input value="Generar" class="btn btn-lg btn-info " type="submit" />
+                </fieldset>
+            </form>
+
     <?php
 		generate_pass();
 
@@ -162,7 +189,7 @@ function show_error() {
                 </div>
                 <div class="fiar">
                     <br />
-                    <p>Ninguna contrase&ntilde;a es guardada. ¡Compru&eacute;balo en <a href="https://github.com/Cadiducho/PasswordGenerator" class="verde">GitHub!</a>
+                    <p>Ninguna contraseña es guardada. ¡Compruébalo en <a href="https://github.com/Cadiducho/PasswordGenerator" class="verde">GitHub!</a>
                 </div>
 
                 <div class="mastfoot">
