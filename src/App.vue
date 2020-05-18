@@ -54,7 +54,7 @@
                     <input id="generated" :type="hidden ? 'password' : 'text'" readonly :value="password">
                 </div>
                 <div class='column-4'>
-                    <button v-clipboard:copy="password" v-clipboard:success="onCopy" v-bind:class="{ green: copy.copied }">
+                    <button v-clipboard:copy="password" v-clipboard:success="onCopy" :disabled="copy.copied">
                         {{copy.texto}}
                     </button>
                 </div>
@@ -158,7 +158,7 @@
             },
             onCopy() {
                 this.copy.texto='✔️ Copiado';
-                this.copied = true;
+                this.copy.copied = true;
             }
         },
         watch: {
@@ -188,9 +188,6 @@
     }
     .red {
         color: orangered;
-    }
-    .green {
-        color: springgreen;
     }
     span {
         user-select: none;
