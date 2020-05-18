@@ -147,8 +147,9 @@
                     }
                 }
 
-                for (let i = 0; i < this.size; i++) {
-                    password += characterList.charAt(Math.floor(Math.random() * characterList.length));
+                const randomArray = window.crypto.getRandomValues(new Uint32Array(this.size))
+                for (const number of randomArray) {
+                    password += characterList.charAt(number % characterList.length);
                 }
                 this.password = password;
             },
