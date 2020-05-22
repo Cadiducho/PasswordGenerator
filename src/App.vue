@@ -7,8 +7,8 @@
         <h1>Generador de contraseñas</h1>
 
         <h3>
-            <span v-if="!darkMode" @click="changeTheme()" class="pointer">Cambiar a modo oscuro 🌑</span>
-            <span v-else @click="changeTheme()" class="pointer">Cambiar a modo claro ☀️ </span>
+            <span v-if="!darkMode" @click="changeTheme()" class="pointer noselect">Cambiar a modo oscuro 🌑</span>
+            <span v-else @click="changeTheme()" class="pointer noselect">Cambiar a modo claro ☀️ </span>
         </h3>
 
         <fieldset>
@@ -192,6 +192,15 @@
     .pointer {
         cursor: pointer;
     }
+    .noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
     span {
         user-select: none;
     }
