@@ -45,7 +45,7 @@
             <p>
                 <input type="checkbox" id="hidden" v-model="hidden" @change="generate()">
                 <label for="hidden" v-if="hidden">Ocultar la contraseña generada</label>
-                <label for="hidden" v-else>No ocultar la contrasñea generada</label>
+                <label for="hidden" v-else>No ocultar la contraseña generada</label>
             </p>
         </fieldset>
         <section>
@@ -71,7 +71,7 @@
 
 
         <footer>
-            Este generador de contraseñas es gratuito y de <a href="https://github.com/Cadiducho/PasswordGenerator">código abierto</a>. Desarrollado por <a href="https://twitter/Cadiducho">@Cadiducho</a>  | <a href="https://cadiducho.com">Cadiducho.com</a>
+            Este generador de contraseñas es gratuito y de <a href="https://github.com/Cadiducho/PasswordGenerator">código abierto</a>. Desarrollado por <a href="https://twitter/Cadiducho">@Cadiducho</a> y <a href="https://github.com/Cadiducho/PasswordGenerator/graphs/contributors">colaboradores</a> | <a href="https://cadiducho.com">Cadiducho.com</a>
         </footer>
     </div>
 </template>
@@ -192,16 +192,12 @@
     .pointer {
         cursor: pointer;
     }
-    .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
+    .noselect, span, label {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
-}
-    span {
-        user-select: none;
+        user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
     }
 </style>
