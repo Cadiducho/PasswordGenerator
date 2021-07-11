@@ -44,8 +44,7 @@
             </p>
             <p>
                 <input type="checkbox" id="hidden" v-model="hidden" @change="generate()">
-                <label for="hidden" v-if="hidden">Ocultar la contraseña generada</label>
-                <label for="hidden" v-else>No ocultar la contraseña generada</label>
+                <label for="hidden">Ocultar la contraseña generada</label>
             </p>
         </fieldset>
         <section>
