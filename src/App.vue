@@ -15,23 +15,19 @@
             <legend>Características</legend>
             <p>
                 <input type="checkbox" id="numbers" v-model="numbers" @change="generate()">
-                <label for="numbers" v-if="numbers">Números incluídos</label>
-                <label for="numbers" v-else class="red">No incluir números</label>
+                <label for="numbers" :class="!numbers ? 'red': ''">Números incluídos</label>
             </p>
             <p>
                 <input type="checkbox" id="mayus" v-model="mayus" @change="generate()">
-                <label for="mayus" v-if="mayus">Mayúsculas incluídas</label>
-                <label for="mayus" v-else class="red">No incluir mayusculas</label>
+                <label for="mayus" :class="!mayus ? 'red': ''">Mayúsculas incluídas</label>
             </p>
             <p>
                 <input type="checkbox" id="minus" v-model="minus" @change="generate()">
-                <label for="minus" v-if="minus">Minúsculas incluídas</label>
-                <label for="minus" v-else class="red">No incluir minúsculas</label>
+                <label for="minus" :class="!minus ? 'red': ''">Minúsculas incluídas</label>
             </p>
             <p>
                 <input type="checkbox" id="symbols" v-model="symbols" @change="generate()">
-                <label for="symbols" v-if="symbols">Símbolos y caracteres especiales incluídos</label>
-                <label for="symbols" v-else class="red">No incluir símbolos o caracteres especiales</label>
+                <label for="symbols" :class="!symbols ? 'red': ''">Símbolos y caracteres especiales incluídos</label>
             </p>
             <hr>
             <p>
