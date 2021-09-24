@@ -14,44 +14,48 @@
         <fieldset>
             <legend>Características</legend>
             <p>
-                <input type="checkbox" id="numbers" v-model="numbers" @change="generate()">
-                <label for="numbers" v-if="numbers">Números incluídos</label>
+                <input type="checkbox" id="numbers" v-model="options.numbers" @change="generate()">
+                <label for="numbers" v-if="options.numbers">Números incluídos</label>
                 <label for="numbers" v-else class="red">No incluir números</label>
             </p>
             <p>
-                <input type="checkbox" id="mayus" v-model="mayus" @change="generate()">
-                <label for="mayus" v-if="mayus">Mayúsculas incluídas</label>
+                <input type="checkbox" id="mayus" v-model="options.mayus" @change="generate()">
+                <label for="mayus" v-if="options.mayus">Mayúsculas incluídas</label>
                 <label for="mayus" v-else class="red">No incluir mayusculas</label>
             </p>
             <p>
-                <input type="checkbox" id="minus" v-model="minus" @change="generate()">
-                <label for="minus" v-if="minus">Minúsculas incluídas</label>
+                <input type="checkbox" id="minus" v-model="options.minus" @change="generate()">
+                <label for="minus" v-if="options.minus">Minúsculas incluídas</label>
                 <label for="minus" v-else class="red">No incluir minúsculas</label>
             </p>
             <p>
-                <input type="checkbox" id="symbols" v-model="symbols" @change="generate()">
-                <label for="symbols" v-if="symbols">Símbolos y caracteres especiales incluídos</label>
+                <input type="checkbox" id="symbols" v-model="options.symbols" @change="generate()">
+                <label for="symbols" v-if="options.symbols">Símbolos y caracteres especiales incluídos</label>
                 <label for="symbols" v-else class="red">No incluir símbolos o caracteres especiales</label>
+            </p>
+            <p>
+                <input type="checkbox" id="save_options" v-model="options.save_options" @change="saveOptions()">
+                <label for="save_options">Guardar opciones</label>
             </p>
             <hr>
             <p>
                 <label for="size">Número de caracteres</label>
-                <input type="number" min="1" id="size" v-model="size" @change="generate()">
+                <input type="number" min="1" id="size" v-model="options.size" @change="generate()">
             </p>
             <p>
                 <label for="size">Caracteres a evitar</label>
-                <input type="text" id="avoid" v-model="avoid" placeholder="Ejemplo: i l I |" @change="generate()">
+                <input type="text" id="avoid" v-model="options.avoid" placeholder="Ejemplo: i l I |" @change="generate()">
             </p>
             <p>
-                <input type="checkbox" id="hidden" v-model="hidden" @change="generate()">
-                <label for="hidden" v-if="hidden">Ocultar la contraseña generada</label>
+                <input type="checkbox" id="hidden" v-model="options.hidden" @change="generate()">
+                <label for="hidden" v-if="options.hidden">Ocultar la contraseña generada</label>
                 <label for="hidden" v-else>No ocultar la contraseña generada</label>
             </p>
         </fieldset>
         <section>
             <div class='row'>
                 <div class="column">
-                    <input id="generated" :type="hidden ? 'password' : 'text'" readonly :value="password">
+                    <input id="generated" :type="options.hidden ? 'password' : 'text'" readonly :value="password">
                 </div>
                 <div class='column-4'>
                     <button v-clipboard:copy="password" v-clipboard:success="onCopy" :disabled="copy.copied">
@@ -83,13 +87,16 @@
             return {
                 password: this.value,
 
-                numbers: true,
-                minus: true,
-                mayus: true,
-                symbols: true,
-                size: 8,
-                hidden: false,
-                avoid: '',
+                options: {
+                    numbers: true,
+                    minus: true,
+                    mayus: true,
+                    symbols: true,
+                    size: 8,
+                    hidden: false,
+                    avoid: '',
+                    save_options: false,
+                },
 
                 copy: {
                     texto: '🔖 ¡Copiar!',
@@ -105,7 +112,6 @@
             }
         },
         mounted: function () {
-            this.generate();
 
             // Themes
             let htmlElement = document.documentElement;
@@ -118,36 +124,45 @@
                 htmlElement.setAttribute('theme', 'light');
                 this.darkMode = false
             }
+
+            // Options
+            if (localStorage.options) {
+              this.options = JSON.parse(localStorage.options);
+            }
+
+            // Cargadas las opciones genera la contraseña
+            this.generate();
         },
         methods: {
             generate() {
+                this.saveOptions();
                 this.copy.copied = false;
                 this.copy.texto = '🔖 ¡Copiar!';
 
                 let characterList = '';
                 let password = '';
 
-                if (this.minus) {
+                if (this.options.minus) {
                     characterList += 'abcdefghijklmnopqrstuvwxyz';
                 }
-                if (this.mayus) {
+                if (this.options.mayus) {
                     characterList += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
                 }
-                if (this.numbers) {
+                if (this.options.numbers) {
                     characterList += '0123456789';
                 }
-                if (this.symbols) {
+                if (this.options.symbols) {
                     characterList += '![]{}()%&*$#^<>~@|';
                 }
-                if (this.avoid) {
-                    let i = this.avoid.length;
+                if (this.options.avoid) {
+                    let i = this.options.avoid.length;
                     while (i--) {
-                        let char = this.avoid.charAt(i);
+                        let char = this.options.avoid.charAt(i);
                         characterList = characterList.replace(char, "");
                     }
                 }
 
-                const randomArray = window.crypto.getRandomValues(new Uint32Array(this.size))
+                const randomArray = window.crypto.getRandomValues(new Uint32Array(this.options.size))
                 for (const number of randomArray) {
                     password += characterList.charAt(number % characterList.length);
                 }
@@ -155,6 +170,22 @@
             },
             changeTheme() {
                 this.darkMode = !this.darkMode;
+            },
+            saveOptions() {
+                if (this.options.save_options) {
+                    localStorage.setItem('options', JSON.stringify({
+                        numbers: this.options.numbers,
+                        minus: this.options.minus,
+                        mayus: this.options.mayus,
+                        symbols: this.options.symbols,
+                        size: this.options.size,
+                        hidden: this.options.hidden,
+                        avoid: this.options.avoid,
+                        save_options: this.options.save_options,
+                    }));
+                } else {
+                    localStorage.removeItem('options');
+                }
             },
             onCopy() {
                 this.copy.texto='✔️ Copiado';
