@@ -15,23 +15,19 @@
             <legend>Características</legend>
             <p>
                 <input type="checkbox" id="numbers" v-model="options.numbers" @change="generate()">
-                <label for="numbers" v-if="options.numbers">Números incluídos</label>
-                <label for="numbers" v-else class="red">No incluir números</label>
+                <label for="numbers" :class="!options.numbers ? 'red': ''">Números incluídos</label>
             </p>
             <p>
                 <input type="checkbox" id="mayus" v-model="options.mayus" @change="generate()">
-                <label for="mayus" v-if="options.mayus">Mayúsculas incluídas</label>
-                <label for="mayus" v-else class="red">No incluir mayusculas</label>
+                <label for="mayus" :class="!options.mayus ? 'red': ''">Mayúsculas incluídas</label>
             </p>
             <p>
                 <input type="checkbox" id="minus" v-model="options.minus" @change="generate()">
-                <label for="minus" v-if="options.minus">Minúsculas incluídas</label>
-                <label for="minus" v-else class="red">No incluir minúsculas</label>
+                <label for="minus" :class="!options.minus ? 'red': ''">Minúsculas incluídas</label>
             </p>
             <p>
                 <input type="checkbox" id="symbols" v-model="options.symbols" @change="generate()">
-                <label for="symbols" v-if="options.symbols">Símbolos y caracteres especiales incluídos</label>
-                <label for="symbols" v-else class="red">No incluir símbolos o caracteres especiales</label>
+                <label for="symbols" :class="!options.symbols ? 'red': ''">Símbolos y caracteres especiales incluídos</label>
             </p>
             <p>
                 <input type="checkbox" id="save_options" v-model="options.save_options" @change="saveOptions()">
@@ -48,8 +44,7 @@
             </p>
             <p>
                 <input type="checkbox" id="hidden" v-model="options.hidden" @change="generate()">
-                <label for="hidden" v-if="options.hidden">Ocultar la contraseña generada</label>
-                <label for="hidden" v-else>No ocultar la contraseña generada</label>
+                <label for="hidden">Ocultar la contraseña generada</label>
             </p>
         </fieldset>
         <section>
