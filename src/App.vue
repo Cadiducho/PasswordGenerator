@@ -72,9 +72,7 @@
         <section>
             <h2>Sobre los caracteres especiales</h2>
             Los caracteres especiales incluídos son los siguientes:
-            <code style="margin-right: 0.1rem" v-for="char in symbolList" :key="char">
-                {{ char }}
-            </code>
+            <code style="margin-right: 0.1rem" v-for="char in symbolList" :key="char">{{ char }}</code>
 
             <br>
             Los caractéres <code>ç</code> y <code>ñ</code> sólo se incluirán en sus respectivas versiones cuando estén las mayúsculas o minúsculas activadas.
