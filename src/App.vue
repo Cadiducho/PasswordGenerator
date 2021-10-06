@@ -26,6 +26,14 @@
                 <label for="minus" :class="!options.minus ? 'red': ''">Minúsculas incluídas</label>
             </p>
             <p>
+                <input type="checkbox" id="ñs" v-model="options.use_ñ" @change="generate()">
+                <label for="ñs" :class="!options.use_ñ ? 'red': ''">Incluir Ñ y ñ</label>
+            </p>
+            <p>
+                <input type="checkbox" id="çs" v-model="options.use_ç" @change="generate()">
+                <label for="çs" :class="!options.use_ç ? 'red': ''">Incluir Ç y ç</label>
+            </p>
+            <p>
                 <input type="checkbox" id="symbols" v-model="options.symbols" @change="generate()">
                 <label for="symbols" :class="!options.symbols ? 'red': ''">Símbolos y caracteres especiales incluídos</label>
             </p>
@@ -62,6 +70,17 @@
         </section>
 
         <section>
+            <h2>Sobre los caracteres especiales</h2>
+            Los caracteres especiales incluídos son los siguientes:
+            <code style="margin-right: 0.1rem" v-for="char in symbolList" :key="char">
+                {{ char }}
+            </code>
+
+            <br>
+            Los caractéres <code>ç</code> y <code>ñ</code> sólo se incluirán en sus respectivas versiones cuando estén las mayúsculas o minúsculas activadas.
+        </section>
+
+        <section>
             <h2>Acerca de</h2>
             Ninguna contraseña es guardada. Toda la generación ocurre en tu navegador.
             <br>
@@ -86,6 +105,8 @@
                     numbers: true,
                     minus: true,
                     mayus: true,
+                    use_ñ: true,
+                    use_ç: true,
                     symbols: true,
                     size: 8,
                     hidden: false,
@@ -98,10 +119,7 @@
                     copied: false,
                 },
 
-                characters: {
-                    type: String,
-                    default: 'a-z,A-Z,0-9,#'
-                },
+                symbolList: "![]{}()%&*$#^<>~@|",
 
                 darkMode: false,
             }
@@ -139,15 +157,27 @@
 
                 if (this.options.minus) {
                     characterList += 'abcdefghijklmnopqrstuvwxyz';
+                    if (this.options.use_ñ) {
+                        characterList += 'ñ';
+                    }
+                    if (this.options.use_ç) {
+                        characterList += 'ç';
+                    }
                 }
                 if (this.options.mayus) {
                     characterList += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    if (this.options.use_ñ) {
+                        characterList += 'Ñ';
+                    }
+                    if (this.options.use_ç) {
+                        characterList += 'Ç';
+                    }
                 }
                 if (this.options.numbers) {
                     characterList += '0123456789';
                 }
                 if (this.options.symbols) {
-                    characterList += '![]{}()%&*$#^<>~@|';
+                    characterList += this.symbolList;
                 }
                 if (this.options.avoid) {
                     let i = this.options.avoid.length;
@@ -172,6 +202,8 @@
                         numbers: this.options.numbers,
                         minus: this.options.minus,
                         mayus: this.options.mayus,
+                        use_ñ: this.options.use_ñ,
+                        use_ç: this.options.use_ç,
                         symbols: this.options.symbols,
                         size: this.options.size,
                         hidden: this.options.hidden,
